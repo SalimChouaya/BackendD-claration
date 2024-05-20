@@ -1,0 +1,12 @@
+package com.PrixDeTransfert.Backend.repositories;
+
+import org.springframework.data.jpa.repository.JpaRepository;
+
+import com.PrixDeTransfert.Backend.models.InformationsOperationsFinancieresBD;
+
+
+
+public interface InterfaceRepositoryInformationsOperationsFinancieres extends JpaRepository<InformationsOperationsFinancieresBD,Long> {
+	InformationsOperationsFinancieresBD findInformationsOperationsFinancieresBDById(Long idInformationsOperationsFinancieres);
+
+}

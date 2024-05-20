@@ -1,0 +1,11 @@
+package com.PrixDeTransfert.Backend.repositories;
+
+import org.springframework.data.jpa.repository.JpaRepository;
+
+import com.PrixDeTransfert.Backend.models.MontantTransactionsMethodeDeterminationPrixTransfertBD;
+
+
+
+public interface InterfaceRepositoryMontantTransactionsMethodeDeterminationPrixTransfert extends JpaRepository<MontantTransactionsMethodeDeterminationPrixTransfertBD,Long>{
+	MontantTransactionsMethodeDeterminationPrixTransfertBD findMontantTransactionsMethodeDeterminationPrixTransfertBDById(Long idMontant);
+}

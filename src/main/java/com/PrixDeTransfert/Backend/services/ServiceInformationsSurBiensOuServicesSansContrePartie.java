@@ -1,0 +1,24 @@
+package com.PrixDeTransfert.Backend.services;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import com.PrixDeTransfert.Backend.models.InformationsSurBiensOuServicesSansContrePartieBD;
+import com.PrixDeTransfert.Backend.models.OperationsSansContrepartieOuAvecContrepartieNonMonetaireBD;
+import com.PrixDeTransfert.Backend.repositories.InterfaceRepositoryInformationsSurBiensOuServicesSansContrePartie;
+
+@Service
+public class ServiceInformationsSurBiensOuServicesSansContrePartie {
+	@Autowired
+	ServiceOperationsSansContrepartieOuAvecContrepartieNonMonetaire ServiceOperationsSansContrepartieOuAvecContrepartieNonMonetaire;
+	@Autowired
+	InterfaceRepositoryInformationsSurBiensOuServicesSansContrePartie b;
+	
+	public InformationsSurBiensOuServicesSansContrePartieBD save (InformationsSurBiensOuServicesSansContrePartieBD a ,Long IdInformationsOperations) {
+		OperationsSansContrepartieOuAvecContrepartieNonMonetaireBD OperationsSansContrepartieOuAvecContrepartieNonMonetaire=new OperationsSansContrepartieOuAvecContrepartieNonMonetaireBD();
+		ServiceOperationsSansContrepartieOuAvecContrepartieNonMonetaire.save(OperationsSansContrepartieOuAvecContrepartieNonMonetaire, IdInformationsOperations);
+	a.setOperationsSansContrepartieOuAvecContrepartieNonMonetaire(OperationsSansContrepartieOuAvecContrepartieNonMonetaire);
+		return b.save(a);
+	}
+
+}

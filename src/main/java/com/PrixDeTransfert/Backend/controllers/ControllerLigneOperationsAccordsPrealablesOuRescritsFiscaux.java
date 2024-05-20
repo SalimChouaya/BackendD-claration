@@ -1,0 +1,52 @@
+package com.PrixDeTransfert.Backend.controllers;
+
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RestController;
+
+import com.PrixDeTransfert.Backend.models.DéclarationPrixDeTransfert;
+import com.PrixDeTransfert.Backend.models.InformationsOperationsAccordsPrealablesOuRescritsFiscauxBD;
+import com.PrixDeTransfert.Backend.models.InformationsOperationsBD;
+import com.PrixDeTransfert.Backend.models.LigneOperationsAccordsPrealablesOuRescritsFiscauxBD;
+
+import jakarta.servlet.http.HttpSession;
+@RestController
+public class ControllerLigneOperationsAccordsPrealablesOuRescritsFiscaux {
+	@Autowired
+	private com.PrixDeTransfert.Backend.services.ServiceLigneOperationsAccordsPrealablesOuRescritsFiscaux ServiceLigneOperationsAccordsPrealablesOuRescritsFiscaux ;
+	
+	@PostMapping("/DéclarationPrixDeTransfert/InformationsOperations/InformationsOperationsAccordsPrealablesOuRescritsFiscaux/LigneOperationsAccordsPrealablesOuRescritsFiscaux/{idInformationsOperationsAccordsPrealablesOuRescritsFiscaux}")
+	public LigneOperationsAccordsPrealablesOuRescritsFiscauxBD save(@RequestBody LigneOperationsAccordsPrealablesOuRescritsFiscauxBD  a,HttpSession session) {
+		Long idInformationsOperationsAccordsPrealablesOuRescritsFiscaux=(Long) session.getAttribute("idInformationsOperationsAccordsPrealablesOuRescritsFiscauxBD");
+		LigneOperationsAccordsPrealablesOuRescritsFiscauxBD LigneOperationsAccordsPrealablesOuRescritsFiscauxBD= ServiceLigneOperationsAccordsPrealablesOuRescritsFiscaux.save(a, idInformationsOperationsAccordsPrealablesOuRescritsFiscaux);
+      return LigneOperationsAccordsPrealablesOuRescritsFiscauxBD;}
+	
+	@Autowired
+	com.PrixDeTransfert.Backend.repositories.InterfaceRepositoryInformationsOperationsAccordsPrealablesOuRescritsFiscaux InterfaceRepositoryInformationsOperationsAccordsPrealablesOuRescritsFiscaux;
+		@Autowired
+		com.PrixDeTransfert.Backend.repositories.InterfaceRepositoryDéclarationPrixDeTransfert InterfaceRepositoryDéclarationPrixDeTransfert;
+			@PutMapping("/MiseAjourLigneOperationsAccordsPrealablesOuRescritsFiscaux")
+			public ResponseEntity<String> updateLigneOperationsAccordsPrealablesOuRescritsFiscaux(@RequestBody List<LigneOperationsAccordsPrealablesOuRescritsFiscauxBD> updatedLigneOperationsAccordsPrealablesOuRescritsFiscaux,HttpSession session) {
+			
+				Long iddeclaration =(Long) session.getAttribute("Déclarationid");
+				DéclarationPrixDeTransfert DéclarationPrixDeTransfert =InterfaceRepositoryDéclarationPrixDeTransfert.findDéclarationPrixDeTransfertById(iddeclaration);
+				InformationsOperationsBD InformationsOperations=DéclarationPrixDeTransfert.getInformationsOperations();
+				InformationsOperationsAccordsPrealablesOuRescritsFiscauxBD InformationsOperationsAccordsPrealablesOuRescritsFiscaux=InformationsOperations.getInformationsOperationsAccordsPrealablesOuRescritsFiscaux();
+				InformationsOperationsAccordsPrealablesOuRescritsFiscaux.setLigneOperationsAccordsPrealablesOuRescritsFiscaux(updatedLigneOperationsAccordsPrealablesOuRescritsFiscaux);
+				InterfaceRepositoryInformationsOperationsAccordsPrealablesOuRescritsFiscaux.save(InformationsOperationsAccordsPrealablesOuRescritsFiscaux);
+				return ResponseEntity.ok(" mise à jour avec succès");
+	
+	
+	
+			}
+	
+	
+	
+	
+}

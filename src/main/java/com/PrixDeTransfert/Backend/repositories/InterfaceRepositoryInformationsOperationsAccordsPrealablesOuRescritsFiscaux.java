@@ -1,0 +1,13 @@
+package com.PrixDeTransfert.Backend.repositories;
+
+import org.springframework.data.jpa.repository.JpaRepository;
+
+import com.PrixDeTransfert.Backend.models.InformationsOperationsAccordsPrealablesOuRescritsFiscauxBD;
+
+
+
+public interface InterfaceRepositoryInformationsOperationsAccordsPrealablesOuRescritsFiscaux extends JpaRepository<InformationsOperationsAccordsPrealablesOuRescritsFiscauxBD,Long> {
+	InformationsOperationsAccordsPrealablesOuRescritsFiscauxBD findInformationsOperationsAccordsPrealablesOuRescritsFiscauxBDById(Long idInformationsOperationsAccordsPrealablesOuRescritsFiscaux);
+	
+
+}

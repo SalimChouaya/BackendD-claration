@@ -1,0 +1,21 @@
+package com.PrixDeTransfert.Backend.services;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import com.PrixDeTransfert.Backend.models.InformationsGroupeEntreprisesBD;
+import com.PrixDeTransfert.Backend.models.RestructurationsGroupeEntreprisesBD;
+
+@Service
+public class ServiceRestructurationsGroupeEntreprises {
+	@Autowired
+	com.PrixDeTransfert.Backend.repositories.InterfaceRepositoryRestructurationsGroupeEntreprises InterfaceRepositoryRestructurationsGroupeEntreprises ;
+	@Autowired
+	com.PrixDeTransfert.Backend.repositories.InterfaceRepositoryInformationsGroupeEntreprises InterfaceRepositoryInformationsGroupeEntreprises;
+	public RestructurationsGroupeEntreprisesBD save(RestructurationsGroupeEntreprisesBD a,Long idInformationsGroupeEntreprises) {
+		InformationsGroupeEntreprisesBD InformationsGroupeEntreprises=InterfaceRepositoryInformationsGroupeEntreprises.findInformationsGroupeEntreprisesBDById(idInformationsGroupeEntreprises);
+	
+	a.setInformationsGroupeEntreprises(InformationsGroupeEntreprises);
+	return InterfaceRepositoryRestructurationsGroupeEntreprises.save(a);
+}
+}

@@ -1,0 +1,11 @@
+package com.PrixDeTransfert.Backend.repositories;
+
+import org.springframework.data.jpa.repository.JpaRepository;
+
+import com.PrixDeTransfert.Backend.models.InformationsSurBiensOuServicesSansContrePartieBD;
+
+
+
+public interface InterfaceRepositoryInformationsSurBiensOuServicesSansContrePartie extends JpaRepository<InformationsSurBiensOuServicesSansContrePartieBD,Long> {
+	InformationsSurBiensOuServicesSansContrePartieBD findInformationsSurBiensOuServicesSansContrePartieBDById(Long idInformationsSurBiensOuServicesSansContrePartie);
+}

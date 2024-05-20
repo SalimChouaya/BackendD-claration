@@ -1,0 +1,56 @@
+package com.PrixDeTransfert.Backend.controllers;
+
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RestController;
+
+import com.PrixDeTransfert.Backend.models.DéclarationPrixDeTransfert;
+import com.PrixDeTransfert.Backend.models.InformationsOperationsBD;
+import com.PrixDeTransfert.Backend.models.InformationsRemunerationsBiensCorporelsIncorporelsBD;
+import com.PrixDeTransfert.Backend.models.InformationsValeursExploitationBD;
+import com.PrixDeTransfert.Backend.models.LigneValeurExploitationBD;
+import com.PrixDeTransfert.Backend.models.MontantTransactionsMethodeDeterminationPrixTransfertBD;
+import com.PrixDeTransfert.Backend.repositories.InterfaceRepositoryInformationsRemunerationsBiens;
+import com.PrixDeTransfert.Backend.services.ServiceInformationsRemunerationsBiensCorporelsIncorporels;
+
+import jakarta.servlet.http.HttpSession;
+@RestController
+public class ControllerInformationsRemunerationsBiensCorporelsIncorporels {
+	@Autowired
+	private ServiceInformationsRemunerationsBiensCorporelsIncorporels InformationsRemunerationsBiensCorporelsIncorporels ;
+	
+	@PostMapping("/DéclarationPrixDeTransfert/MontantTransaction/InformationsRemunerationsBiensCorporelsIncorporels")// lid nekhdho m return mta InformationsValeursExploitation.save(a, idDéclaration)(khatr montantTransaction o informationsOperations yetsan3o mara kahw
+	public InformationsRemunerationsBiensCorporelsIncorporelsBD save(@RequestBody InformationsRemunerationsBiensCorporelsIncorporelsBD  a,HttpSession session) {
+		Long idMontantTransaction=(Long) session.getAttribute("idMontantTransactions");
+		InformationsRemunerationsBiensCorporelsIncorporelsBD InformationsRemunerationsBiensCorporelsIncorporelsBD =InformationsRemunerationsBiensCorporelsIncorporels.save(a, idMontantTransaction);
+		session.setAttribute("idInformationsRemunerationsBiensCorporelsIncorporels", InformationsRemunerationsBiensCorporelsIncorporelsBD.getId());
+		return InformationsRemunerationsBiensCorporelsIncorporelsBD;}
+    @Autowired
+    com.PrixDeTransfert.Backend.repositories.InterfaceRepositoryDéclarationPrixDeTransfert InterfaceRepositoryDéclarationPrixDeTransfert;
+    @Autowired
+    InterfaceRepositoryInformationsRemunerationsBiens InterfaceRepositoryInformationsRemunerationsBiensCorporelsIncorporels;
+	@PutMapping("/MiseAjourInformationsRemunerationsBiensCorporelsIncorporels")
+	public ResponseEntity<String> updateInformationsRemunerationsBiensCorporelsIncorporels(@RequestBody InformationsRemunerationsBiensCorporelsIncorporelsBD updatedInformationsRemunerationsBiensCorporelsIncorporels,HttpSession session) {
+	
+		Long iddeclaration =(Long) session.getAttribute("Déclarationid");
+		DéclarationPrixDeTransfert DéclarationPrixDeTransfert =InterfaceRepositoryDéclarationPrixDeTransfert.findDéclarationPrixDeTransfertById(iddeclaration);
+		InformationsOperationsBD InformationsOperations=DéclarationPrixDeTransfert.getInformationsOperations();
+		MontantTransactionsMethodeDeterminationPrixTransfertBD MontantTransactionsMethodeDeterminationPrixTransfert=InformationsOperations.getMontantTransactionsMethodeDeterminationPrixTransfert();
+		
+	InformationsRemunerationsBiensCorporelsIncorporelsBD InformationsRemunerationsBiensCorporelsIncorporels=MontantTransactionsMethodeDeterminationPrixTransfert.getInformationsRemunerationsBiensCorporelsIncorporels();
+	
+	InformationsRemunerationsBiensCorporelsIncorporels.setTotalAchatsDepensesRemunerationsBiensCorporelsIncorporels(updatedInformationsRemunerationsBiensCorporelsIncorporels.getTotalAchatsDepensesRemunerationsBiensCorporelsIncorporels());
+	InformationsRemunerationsBiensCorporelsIncorporels.setTotalVentesRevenusRemunerationsBiensCorporelsIncorporels(updatedInformationsRemunerationsBiensCorporelsIncorporels.getTotalVentesRevenusRemunerationsBiensCorporelsIncorporels());
+	session.setAttribute("idInformationsRemunerations", InformationsRemunerationsBiensCorporelsIncorporels.getId());
+	InterfaceRepositoryInformationsRemunerationsBiensCorporelsIncorporels.save(InformationsRemunerationsBiensCorporelsIncorporels);
+	return ResponseEntity.ok(" mise à jour avec succès");
+	
+	
+}
+}

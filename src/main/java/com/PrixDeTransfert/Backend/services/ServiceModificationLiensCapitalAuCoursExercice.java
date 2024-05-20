@@ -1,0 +1,24 @@
+package com.PrixDeTransfert.Backend.services;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import com.PrixDeTransfert.Backend.models.InformationsEntrepriseDeclaranteBD;
+import com.PrixDeTransfert.Backend.models.ModificationLiensCapitalAuCoursExerciceBD;
+
+@Service
+public class ServiceModificationLiensCapitalAuCoursExercice {
+	@Autowired 
+	com.PrixDeTransfert.Backend.repositories.InterfaceRepositoryModificationLiensCapitalAuCoursExercice InterfaceRepositoryModificationLiensCapitalAuCoursExercice;
+    @Autowired
+    com.PrixDeTransfert.Backend.repositories.InterfaceRepositoryInformationsEntrepriseDeclarante InterfaceRepositoryInformationsEntrepriseDeclarante;
+
+	
+	public ModificationLiensCapitalAuCoursExerciceBD save(ModificationLiensCapitalAuCoursExerciceBD a,Long IDInformationsDeclaration) {
+		InformationsEntrepriseDeclaranteBD InformationsEntrepriseDeclarante=InterfaceRepositoryInformationsEntrepriseDeclarante.findInformationsEntrepriseDeclaranteBDById(IDInformationsDeclaration);
+		a.setInformationsEntrepriseDeclarante(InformationsEntrepriseDeclarante);
+		return InterfaceRepositoryModificationLiensCapitalAuCoursExercice.save(a);
+	}
+	
+
+}

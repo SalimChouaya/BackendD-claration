@@ -1,0 +1,27 @@
+package com.PrixDeTransfert.Backend.services;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import com.PrixDeTransfert.Backend.repositories.InterfaceRepositoryInformationsCessionsAcquisitionsActifs;
+import org.springframework.stereotype.Service;
+
+import com.PrixDeTransfert.Backend.models.InformationsCessionsAcquisitionsActifsBD;
+import com.PrixDeTransfert.Backend.models.MontantTransactionsMethodeDeterminationPrixTransfertBD;
+import com.PrixDeTransfert.Backend.repositories.InterfaceRepositoryMontantTransactionsMethodeDeterminationPrixTransfert;
+@Service
+public class ServiceInformationsCessionsAcquisitionsActifs  {
+	
+	
+	@Autowired
+	ServiceMontantTransactionsMethodeDeterminationPrixTransfert service;
+    @Autowired
+    InterfaceRepositoryMontantTransactionsMethodeDeterminationPrixTransfert b;
+    @Autowired
+    InterfaceRepositoryInformationsCessionsAcquisitionsActifs InterfaceRepositoryInformationsCessionsAcquisitionsActifs;
+	
+	public InformationsCessionsAcquisitionsActifsBD save(InformationsCessionsAcquisitionsActifsBD a, Long IdMontantTransactions) {
+		MontantTransactionsMethodeDeterminationPrixTransfertBD MontantTransactionsMethodeDeterminationPrixTransfert=b.findMontantTransactionsMethodeDeterminationPrixTransfertBDById(IdMontantTransactions);
+		a.setMontantTransactionsMethodeDeterminationPrixTransfert(MontantTransactionsMethodeDeterminationPrixTransfert);
+		return InterfaceRepositoryInformationsCessionsAcquisitionsActifs.save(a);
+	}
+
+}
