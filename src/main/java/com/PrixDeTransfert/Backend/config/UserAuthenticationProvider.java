@@ -85,4 +85,13 @@ public class UserAuthenticationProvider {
         return new UsernamePasswordAuthenticationToken(user, null, Collections.emptyList());
     }
 
+
+
+    public Long getUserIdFromToken(String token) {
+        Algorithm algorithm = Algorithm.HMAC256(secretKey);
+        JWTVerifier verifier = JWT.require(algorithm).build();
+        DecodedJWT decoded = verifier.verify(token);
+        return Long.parseLong(decoded.getSubject()); // Assuming the subject of JWT is the user ID
+    }
 }
+

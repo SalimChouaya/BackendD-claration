@@ -18,6 +18,7 @@ import jakarta.servlet.http.HttpSession;
 
 @RestController
 public class ControllerCreerCompteEntreprise {
+	public static Long entrepriseId;
 	@Autowired
 	private com.PrixDeTransfert.Backend.services.ServiceCreerCompte ServiceCreerCompte;
 	@Autowired
@@ -36,14 +37,16 @@ public class ControllerCreerCompteEntreprise {
 		
 	}
 	@PostMapping("/Entreprise")// le controlleur pour faire la declaration 
-	public Object save(@RequestBody com.PrixDeTransfert.Backend.models.Entreprise a, HttpSession session) {
-		Long iduser =(Long) session.getAttribute("iduser");
+	public Object save(@RequestBody com.PrixDeTransfert.Backend.models.Entreprise a) {
+		Long iduser=userController.iduser;
+		
 		User user =InterfaceRepositoryUser.findUserById(iduser);
+		
 		if(user.getEntreprise()!=null) {
 			return "vous avez déja une déclaration";
 		}
 		Entreprise savedEntreprise = ServiceCreerCompte.save(a,iduser);
-        session.setAttribute("entrepriseId", savedEntreprise.getId());
+		entrepriseId= savedEntreprise.getId();
 		return savedEntreprise;
 		
 	}

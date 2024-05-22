@@ -22,7 +22,7 @@ public class ControlleurInformationsMereEntiteUltime {
 	
 	@PostMapping("/DéclarationPrixDeTransfert/InformationsGroupesEntreprises/InformationsMereEntiteUltime")
 	public InformationsMereEntiteUltimeBD save(@RequestBody InformationsMereEntiteUltimeBD  a,HttpSession session) {
-		Long idInformationsGroupeEntreprises=(Long) session.getAttribute("idInformationsGroupeEntreprises");
+		Long idInformationsGroupeEntreprises=ControlleurInformationsGroupeEntreprises.idInformationsGroupeEntreprises;
 		
 		return ServiceInformationsMereEntiteUltime.save(a, idInformationsGroupeEntreprises);
 		

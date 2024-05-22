@@ -23,8 +23,8 @@ public class ControlleurParticipationLiee {
 	
 	@PostMapping("/DéclarationPrixDeTransfert/InformationsEntrepriseDeclarante/LigneParticipationLiee")
 	
-	public LigneParticipationLieeBD save(@RequestBody LigneParticipationLieeBD a,HttpSession session) {
-		Long InformationsEntrepriseDeclaranteid=(Long) session.getAttribute("InformationsEntrepriseDeclaranteid");
+	public LigneParticipationLieeBD save(@RequestBody LigneParticipationLieeBD a) {
+		Long InformationsEntrepriseDeclaranteid=ControlleurInformationsEntrepriseDeclarante.InformationsEntrepriseDeclaranteid;
 		return ServiceParticipationLiee.save(a, InformationsEntrepriseDeclaranteid);
 		
 	}

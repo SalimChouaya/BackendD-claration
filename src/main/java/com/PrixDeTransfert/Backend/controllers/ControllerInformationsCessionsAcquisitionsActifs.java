@@ -20,12 +20,12 @@ import jakarta.servlet.http.HttpSession;
 public class ControllerInformationsCessionsAcquisitionsActifs {
 	@Autowired
 	private com.PrixDeTransfert.Backend.services.ServiceInformationsCessionsAcquisitionsActifs ServiceInformationsCessionsAcquisitionsActifs;
-	
+	public static Long idInformationsCessionsAcquisitionsActifs;
 	@PostMapping("/DéclarationPrixDeTransfert/MontantTransaction/InformationsCessionsAcquisitionsActifs")// lid nekhdho m return mta InformationsValeursExploitation.save(a, idDéclaration)(khatr montantTransaction o informationsOperations yetsan3o mara kahw
-	public InformationsCessionsAcquisitionsActifsBD save(@RequestBody InformationsCessionsAcquisitionsActifsBD  a,HttpSession session) {
-		Long idMontantTransaction =(Long) session.getAttribute("idMontantTransactions");
+	public InformationsCessionsAcquisitionsActifsBD save(@RequestBody InformationsCessionsAcquisitionsActifsBD  a) {
+		Long idMontantTransaction=ControlleurInformationsValeursExploitation.idMontantTransactions;
 		InformationsCessionsAcquisitionsActifsBD InformationsCessionsAcquisitionsActifsBD=ServiceInformationsCessionsAcquisitionsActifs.save(a, idMontantTransaction);
-		session.setAttribute("idInformationsCessionsAcquisitionsActifs", InformationsCessionsAcquisitionsActifsBD.getId());
+		idInformationsCessionsAcquisitionsActifs=InformationsCessionsAcquisitionsActifsBD.getId();
 		return InformationsCessionsAcquisitionsActifsBD;}
 	
 	

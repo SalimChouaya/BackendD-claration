@@ -22,7 +22,7 @@ public class ControllerAutresInformationsARenseignerSurDeclarationPrixTransfert 
 	@PostMapping("/AutresInformationsARenseignerSurDeclarationPrixTransfert")
 	public com.PrixDeTransfert.Backend.models.AutresInformationsARenseignerSurDeclarationPrixTransfert save(@RequestBody com.PrixDeTransfert.Backend.models.AutresInformationsARenseignerSurDeclarationPrixTransfert a, HttpSession session) {
 		
-        Long iddeclaration =(Long) session.getAttribute("Déclarationid");
+        Long iddeclaration =ControlleurDéclarationPrixDeTransfert.Déclarationid;
         
 		return ServiceAutresInformationsARenseignerSurDeclarationPrixTransfert.save(a, iddeclaration);
 		

@@ -23,8 +23,8 @@ public class ControllerLigneRemunerationBiens {
 	private ServiceLigneRemunerationBiens LigneRemunerationBiens ;
 	
 	@PostMapping("/DéclarationPrixDeTransfert/MontantTransaction/InformationsRemunerationsBiensCorporelsIncorporels/LigneRemunerationBiens")
-	public LigneRemunerationBiensBD save(@RequestBody LigneRemunerationBiensBD  a,HttpSession session) {
-		Long idInformationsRemunerationsBiensCorporelsIncorporels=(Long) session.getAttribute("idInformationsRemunerationsBiensCorporelsIncorporels");
+	public LigneRemunerationBiensBD save(@RequestBody LigneRemunerationBiensBD  a) {
+		Long idInformationsRemunerationsBiensCorporelsIncorporels=ControllerInformationsRemunerationsBiensCorporelsIncorporels.idInformationsRemunerationsBiensCorporelsIncorporels;
 		return LigneRemunerationBiens.save(a, idInformationsRemunerationsBiensCorporelsIncorporels);}
 
 @Autowired

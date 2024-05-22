@@ -21,8 +21,8 @@ public class ControlleurLigneActifInCorporel {
 	private com.PrixDeTransfert.Backend.services.ServiceLigneActifInCorporel ServiceLigneActifInCorporel ;
 	
 	@PostMapping("/DéclarationPrixDeTransfert/InformationsGroupesEntreprises/ActifInCorporel")
-	public LigneActifInCorporelBD save(@RequestBody LigneActifInCorporelBD  a,HttpSession session) {
-		Long idInformationsGroupeEntreprises=(Long) session.getAttribute("idInformationsGroupeEntreprises");
+	public LigneActifInCorporelBD save(@RequestBody LigneActifInCorporelBD  a) {
+		Long idInformationsGroupeEntreprises=ControlleurInformationsGroupeEntreprises.idInformationsGroupeEntreprises;
 		return ServiceLigneActifInCorporel.save(a, idInformationsGroupeEntreprises);
 
 }

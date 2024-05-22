@@ -25,8 +25,8 @@ public class ControllerLigneEmpruntContracte
 	private com.PrixDeTransfert.Backend.services.ServiceLigneEmpruntContracte ServiceLigneEmpruntContracte ;
 	
 	@PostMapping("/DéclarationPrixDeTransfert/InformationsOperations/InformationsPretsEmprunts/LigneEmpruntContracte")// lid nekhdhouh mn lignePretAccorde baad mancreew InormationsEmprunts
-	public LigneEmpruntContracteBD save(@RequestBody LigneEmpruntContracteBD  a,HttpSession session) {
-		Long idInformationsPretsEmprunts =(Long) session.getAttribute("idInformationsPretsEmprunts");
+	public LigneEmpruntContracteBD save(@RequestBody LigneEmpruntContracteBD  a) {
+		Long idInformationsPretsEmprunts =ControllerLignePretAccorde.idInformationsPretsEmprunts;
 		return ServiceLigneEmpruntContracte.save(a, idInformationsPretsEmprunts);}
 
 	

@@ -22,12 +22,12 @@ import jakarta.servlet.http.HttpSession;
 public class ControllerLignePretAccorde {
 	@Autowired
 	private com.PrixDeTransfert.Backend.services.ServiceLignePretAccorde ServiceLignePretAccorde;
-	
+	public static Long idInformationsPretsEmprunts;
 	@PostMapping("/DéclarationPrixDeTransfert/InformationsOperations/InformationsPretsEmprunts/LignePretAccorde")// lid nekhdhouh waktli nasn3o awel mara InformationsOperations f valeur Exploitation 
-	public LignePretAccordeBD save(@RequestBody LignePretAccordeBD  a,HttpSession session) {
-		Long idInformationsOperations=(Long) session.getAttribute("idInformationsOperations");
+	public LignePretAccordeBD save(@RequestBody LignePretAccordeBD  a) {
+		Long idInformationsOperations=ControlleurInformationsValeursExploitation.idInformationsOperations;
 		LignePretAccordeBD LignePretAccordeBD=ServiceLignePretAccorde.save(a, idInformationsOperations);
-		session.setAttribute("idInformationsPretsEmprunts",LignePretAccordeBD.getInformationsPretsEmprunts().getId());
+		idInformationsPretsEmprunts=LignePretAccordeBD.getInformationsPretsEmprunts().getId();
 		return LignePretAccordeBD ;}
 @Autowired
 com.PrixDeTransfert.Backend.repositories.InterfaceRepositoryInformationsPretsEmprunts InterfaceRepositoryInformationsPretsEmprunts ;

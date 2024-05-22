@@ -19,16 +19,17 @@ import jakarta.servlet.http.HttpSession;
 
 @RestController
 public class ControlleurDéclarationPrixDeTransfert {
+	public static Long Déclarationid ;
 	@Autowired
 	private com.PrixDeTransfert.Backend.services.ServiceDéclarationPrixDeTransfert ServiceDéclarationPrixDeTransfert;
 	@Autowired 
 	com.PrixDeTransfert.Backend.repositories.InterfaceRepositoryCreerCompte InterfaceRepositoryCreerCompte ;
 	
 	@PostMapping("/DéclarationPrixDeTransfert")
-	public DéclarationPrixDeTransfert save(@RequestBody DéclarationPrixDeTransfert a,HttpSession session) {
-		Long entrepriseid=(Long) session.getAttribute("entrepriseId");
+	public DéclarationPrixDeTransfert save(@RequestBody DéclarationPrixDeTransfert a) {
+		Long entrepriseid=ControllerCreerCompteEntreprise.entrepriseId;
 		DéclarationPrixDeTransfert Declaration =ServiceDéclarationPrixDeTransfert.save(a,entrepriseid);
-		session.setAttribute("Déclarationid", Declaration.getId());
+		Déclarationid =Declaration.getId();
 		return Declaration;
 		
 	}

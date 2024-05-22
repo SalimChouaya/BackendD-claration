@@ -25,7 +25,7 @@ public class ControllerLigneBiensOuServicesSansContrePartie {
 	
 	@PostMapping("/DéclarationPrixDeTransfert/InformationsOperations/OperationsSansContrepartieOuAvecContrepartieNonMonetaire/InformationsSurBiensOuServicesSansContrePartie/LigneBiensOuServicesSansContrePartie ")
 	public LigneBiensOuServicesSansContrePartieBD save(@RequestBody LigneBiensOuServicesSansContrePartieBD  a,HttpSession session) {
-		Long idInformationsSurBiensOuServicesSansContrePartie=(Long) session.getAttribute("idInformationsSurBiensOuServicesSansContrePartie");
+		Long idInformationsSurBiensOuServicesSansContrePartie=ControllerInformationsSurBiensOuServicesSansContrePartie.idInformationsSurBiensOuServicesSansContrePartie;
 		return LigneBiensOuServicesSansContrePartie.save(a, idInformationsSurBiensOuServicesSansContrePartie);}
 	
 	@Autowired

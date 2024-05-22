@@ -12,6 +12,8 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.PrixDeTransfert.Backend.models.AutresInformationsARenseignerSurDeclarationPrixTransfert;
@@ -51,6 +53,7 @@ import com.PrixDeTransfert.Backend.models.MontantTransactionsMethodeDeterminatio
 import com.PrixDeTransfert.Backend.models.OperationsSansContrepartieOuAvecContrepartieNonMonetaireBD;
 import com.PrixDeTransfert.Backend.models.Qualité;
 import com.PrixDeTransfert.Backend.models.User;
+import com.PrixDeTransfert.Backend.models.XMLDocument;
 import com.PrixDeTransfert.Backend.structureXML.GenerationXML.ActifIncorporel;
 import com.PrixDeTransfert.Backend.structureXML.GenerationXML.Actifcorporel;
 import com.PrixDeTransfert.Backend.structureXML.GenerationXML.AutreIdentifiant;
@@ -122,22 +125,30 @@ public class ControlleurFichierXML {
 	@GetMapping("/download/xml")
     public ResponseEntity<String> downloadXml(  HttpSession session) {
         try {
-        	Long id =(Long) session.getAttribute("iduser");
+        	Long id =userController.iduser;
         	User user=InterfaceRepositoryUser.findUserById(id);
-        	if(user.getEntreprise()==null) {
+        	DéclarationPrixDeTransfert Déclaration=user.getEntreprise().getDéclarationPrixDeTransfert();
+        	XMLDocument XMLDocument =Déclaration.getXMLDocument();
+        	if(XMLDocument==null) {
         		
         		return ResponseEntity.status(HttpStatus.NOT_FOUND).body("vous n'avez pas une déclaration");
         		
         	}
-        	
-            com.PrixDeTransfert.Backend.structureXML.GenerationXML.PrixTransfert prixTransfert = createPrixTransfert(id); // Méthode à définir pour créer et remplir l'objet
-            XmlMapper xmlMapper = new XmlMapper();
-            xmlMapper.setDefaultPropertyInclusion(JsonInclude.Include.NON_NULL);
-            xmlMapper.setPropertyNamingStrategy(PropertyNamingStrategies.UPPER_CAMEL_CASE);
-            StringWriter writer = new StringWriter();
-            xmlMapper.writeValue(writer, prixTransfert);
-            
-            String xmlContent = writer.toString();
+        	String xmlContent = XMLDocument.getXMLContent();
+			/*
+			 * return ResponseEntity.ok() .header(HttpHeaders.CONTENT_DISPOSITION,
+			 * "attachment; filename=\"prix_transfert.xml\"")
+			 * .contentType(MediaType.APPLICATION_XML) .body(xmlContent);
+			 * com.PrixDeTransfert.Backend.structureXML.GenerationXML.PrixTransfert
+			 * prixTransfert = createPrixTransfert(id); // Méthode à définir pour créer et
+			 * remplir l'objet XmlMapper xmlMapper = new XmlMapper();
+			 * xmlMapper.setDefaultPropertyInclusion(JsonInclude.Include.NON_NULL);
+			 * xmlMapper.setPropertyNamingStrategy(PropertyNamingStrategies.UPPER_CAMEL_CASE
+			 * ); StringWriter writer = new StringWriter(); xmlMapper.writeValue(writer,
+			 * prixTransfert);
+			 * 
+			 * String xmlContent = writer.toString();
+			 */
             return ResponseEntity.ok()
                 .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"prix_transfert.xml\"")
                 .contentType(MediaType.APPLICATION_XML)
@@ -147,6 +158,75 @@ public class ControlleurFichierXML {
         }
     
 	    }
+	 @PostMapping("/update/xml")
+	    public ResponseEntity<String> updateXml(@RequestBody XMLDocument xmlDocument, HttpSession session) {
+	        try {
+	        	Long id =userController.iduser;
+	        	User user=InterfaceRepositoryUser.findUserById(id);
+	        	DéclarationPrixDeTransfert Déclaration=user.getEntreprise().getDéclarationPrixDeTransfert();
+	        	XMLDocument XMLDocument =Déclaration.getXMLDocument();
+	        	if(XMLDocument==null) {
+	        		
+	        		return ResponseEntity.status(HttpStatus.NOT_FOUND).body("vous n'avez pas une déclaration");
+	        		
+	        	}
+
+	            
+	            XMLDocument.setXMLContent(xmlDocument.getXMLContent());
+	            user.getEntreprise().getDéclarationPrixDeTransfert().setXMLDocument(XMLDocument);
+                 
+                 InterfaceRepositoryUser.save(user);
+
+	            return ResponseEntity.ok("Le contenu XML a été mis à jour avec succès");
+	        } catch (Exception e) {
+	            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Erreur lors de la mise à jour du XML : " + e.getMessage());
+	        }
+	    }
+	 @GetMapping("/view")
+	    public ResponseEntity<String> viewXml(HttpSession session) {
+		 Long id =userController.iduser;
+     	User user=InterfaceRepositoryUser.findUserById(id);
+     	DéclarationPrixDeTransfert Déclaration=user.getEntreprise().getDéclarationPrixDeTransfert();
+     	XMLDocument XMLDocument =Déclaration.getXMLDocument();
+     	
+	            return ResponseEntity.ok(XMLDocument.getXMLContent());
+	 }
+	 
+	 @GetMapping("/generate")
+	    public ResponseEntity<String> generateXml(HttpSession session) {
+	        try {
+	            Long id = userController.iduser;
+	            User user = InterfaceRepositoryUser.findUserById(id);
+	           
+
+	            
+	            PrixTransfert prixTransfert = createPrixTransfert(id);
+
+	            
+	            XmlMapper xmlMapper = new XmlMapper();
+	            xmlMapper.setDefaultPropertyInclusion(JsonInclude.Include.NON_NULL);
+	            xmlMapper.setPropertyNamingStrategy(PropertyNamingStrategies.UPPER_CAMEL_CASE);
+	            StringWriter writer = new StringWriter();
+	            xmlMapper.writeValue(writer, prixTransfert);
+	            String xmlContent = writer.toString();
+
+	            
+	            DéclarationPrixDeTransfert declaration = user.getEntreprise().getDéclarationPrixDeTransfert();
+	            
+	            declaration.setXMLDocument(new XMLDocument());
+	            
+	            declaration.getXMLDocument().setXMLContent(xmlContent);
+	            
+	            
+	            InterfaceRepositoryUser.save(user);
+
+	            return ResponseEntity.ok("Le fichier XML a été généré avec succès et enregistré dans l'objet XMLDocument associé à l'utilisateur.");
+	        } catch (Exception e) {
+	            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Erreur lors de la génération et de l'enregistrement du fichier XML : " + e.getMessage());
+	        }
+	    }
+	
+
 
 	    private PrixTransfert createPrixTransfert(Long id) {
 	    	

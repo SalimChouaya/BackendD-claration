@@ -23,8 +23,8 @@ public class ControlleurParticipationDeclarante {
 	private com.PrixDeTransfert.Backend.services.ServiceParticipationDeclarante ServiceParticipationDeclarante ;
 	
 	@PostMapping("/DéclarationPrixDeTransfert/InformationsEntrepriseDeclarante/LigneParticipationDeclarante")
-	public LigneParticipationDeclaranteBD save(@RequestBody LigneParticipationDeclaranteBD  a,HttpSession session) {
-		Long InformationsEntrepriseDeclaranteid=(Long) session.getAttribute("InformationsEntrepriseDeclaranteid");
+	public LigneParticipationDeclaranteBD save(@RequestBody LigneParticipationDeclaranteBD  a) {
+		Long InformationsEntrepriseDeclaranteid=ControlleurInformationsEntrepriseDeclarante.InformationsEntrepriseDeclaranteid;
 		return ServiceParticipationDeclarante.save(a, InformationsEntrepriseDeclaranteid);
 		
 

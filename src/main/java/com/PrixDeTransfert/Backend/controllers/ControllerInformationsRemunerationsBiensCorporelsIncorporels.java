@@ -24,12 +24,12 @@ import jakarta.servlet.http.HttpSession;
 public class ControllerInformationsRemunerationsBiensCorporelsIncorporels {
 	@Autowired
 	private ServiceInformationsRemunerationsBiensCorporelsIncorporels InformationsRemunerationsBiensCorporelsIncorporels ;
-	
+	public static Long idInformationsRemunerationsBiensCorporelsIncorporels;
 	@PostMapping("/DéclarationPrixDeTransfert/MontantTransaction/InformationsRemunerationsBiensCorporelsIncorporels")// lid nekhdho m return mta InformationsValeursExploitation.save(a, idDéclaration)(khatr montantTransaction o informationsOperations yetsan3o mara kahw
 	public InformationsRemunerationsBiensCorporelsIncorporelsBD save(@RequestBody InformationsRemunerationsBiensCorporelsIncorporelsBD  a,HttpSession session) {
-		Long idMontantTransaction=(Long) session.getAttribute("idMontantTransactions");
+		Long idMontantTransaction=ControlleurInformationsValeursExploitation.idMontantTransactions;
 		InformationsRemunerationsBiensCorporelsIncorporelsBD InformationsRemunerationsBiensCorporelsIncorporelsBD =InformationsRemunerationsBiensCorporelsIncorporels.save(a, idMontantTransaction);
-		session.setAttribute("idInformationsRemunerationsBiensCorporelsIncorporels", InformationsRemunerationsBiensCorporelsIncorporelsBD.getId());
+		idInformationsRemunerationsBiensCorporelsIncorporels=InformationsRemunerationsBiensCorporelsIncorporelsBD.getId();
 		return InformationsRemunerationsBiensCorporelsIncorporelsBD;}
     @Autowired
     com.PrixDeTransfert.Backend.repositories.InterfaceRepositoryDéclarationPrixDeTransfert InterfaceRepositoryDéclarationPrixDeTransfert;

@@ -25,16 +25,16 @@ public class ControlleurLigneAutreOperation {
 	private ServiceLigneAutreOperation LigneAutreOperation ;
 	
 	@PostMapping("/DéclarationPrixDeTransfert/MontantTransaction/InformationsAutresOperations/LigneAutreOperation")
-	public LigneAutreOperationBD save(@RequestBody LigneAutreOperationBD  a,HttpSession session) {
-		Long idInformationsAutresOperations =(Long) session.getAttribute("idInformationsAutresOperations");
+	public LigneAutreOperationBD save(@RequestBody LigneAutreOperationBD  a) {
+		Long idInformationsAutresOperations =ControllerInformationsAutresOperations.idInformationsAutresOperations;
 		return LigneAutreOperation.save(a, idInformationsAutresOperations);}
 	@Autowired 
 	private ServiceDescriptionTransactionsRegimeFiscalPrivilegie DescriptionTransactionsRegimeFiscalPrivilegie;
 	
 	@PostMapping("/DéclarationPrixDeTransfert/MontantTransaction/DescriptionTransactionsRegimeFiscalPrivilegie")
-	public com.PrixDeTransfert.Backend.models.DescriptionTransactionsRegimeFiscalPrivilegie save(@RequestBody com.PrixDeTransfert.Backend.models.DescriptionTransactionsRegimeFiscalPrivilegie  a,HttpSession session) {
-		Long idMontantTransactions=(Long) session.getAttribute("idMontantTransactions");
-		return DescriptionTransactionsRegimeFiscalPrivilegie.save(a, idMontantTransactions);}
+	public com.PrixDeTransfert.Backend.models.DescriptionTransactionsRegimeFiscalPrivilegie save(@RequestBody com.PrixDeTransfert.Backend.models.DescriptionTransactionsRegimeFiscalPrivilegie  a) {
+		Long idMontantTransaction=ControlleurInformationsValeursExploitation.idMontantTransactions;
+		return DescriptionTransactionsRegimeFiscalPrivilegie.save(a, idMontantTransaction);}
 	
 	@Autowired
 	com.PrixDeTransfert.Backend.repositories.InterfaceRepositoryInformationsAutresOperations InterfaceRepositoryInformationsAutresOperations;

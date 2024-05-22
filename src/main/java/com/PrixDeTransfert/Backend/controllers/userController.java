@@ -41,7 +41,7 @@ public class userController {
 	 	@Autowired
 	    private  final  UserAuthenticationProvider userAuthenticationProvider;
 	 	
-
+   public static Long iduser;
 		@PostMapping("/login")
 	    public ResponseEntity<UserDto> login(@RequestBody @Valid CredentialsDto credentialsDto, HttpServletResponse response,HttpSession session) {
 	       
@@ -51,7 +51,10 @@ public class userController {
 	        cookie.setPath("/");
 	        cookie.setMaxAge(3600); // set cookie expiration time in seconds, adjust as needed
 	        response.addCookie(cookie);
-	        session.setAttribute("iduser", userDto.getId());
+	        iduser=userDto.getId();
+	        System.out.println("La valeur de la variable est : " + iduser);
+			/* session.setAttribute("iduser", userDto.getId()); */
+	        
 	        return ResponseEntity.ok(userDto);
 	    }
 

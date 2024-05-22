@@ -17,15 +17,15 @@ import com.PrixDeTransfert.Backend.models.RestructurationsGroupeEntreprisesBD;
 import jakarta.servlet.http.HttpSession;
 @RestController
 public class ControlleurInformationsGroupeEntreprises {
-
+public static Long idInformationsGroupeEntreprises;
 	@Autowired
 	private com.PrixDeTransfert.Backend.services.ServiceInformationsGroupeEntreprises ServiceInformationsGroupeEntreprises;
 	
 	@PostMapping("/DéclarationPrixDeTransfert/InformationsGroupeEntreprises")
 	public InformationsGroupeEntreprisesBD save(@RequestBody InformationsGroupeEntreprisesBD a,HttpSession session) {
-		Long declarationid =(Long) session.getAttribute("Déclarationid");
+		Long declarationid =ControlleurDéclarationPrixDeTransfert.Déclarationid;
 	    InformationsGroupeEntreprisesBD InformationsGroupeEntrepriseBD=ServiceInformationsGroupeEntreprises.save(a, declarationid);
-		session.setAttribute("idInformationsGroupeEntreprises",InformationsGroupeEntrepriseBD.getId() );
+		idInformationsGroupeEntreprises=InformationsGroupeEntrepriseBD.getId() ;
 		return InformationsGroupeEntrepriseBD;
 		
 	}
@@ -46,7 +46,7 @@ public class ControlleurInformationsGroupeEntreprises {
 	com.PrixDeTransfert.Backend.services.ServiceRestructurationsGroupeEntreprises ServiceRestructurationsGroupeEntreprises;
 	@PostMapping("/DéclarationPrixDeTransfert/InformationsGroupeEntreprises/RestructurationsGroupeEntreprises")
 	public RestructurationsGroupeEntreprisesBD save(@RequestBody RestructurationsGroupeEntreprisesBD a,HttpSession session) {
-		Long idInformationsGroupeEntreprises=(Long) session.getAttribute("idInformationsGroupeEntreprises");
+		
 		return ServiceRestructurationsGroupeEntreprises.save(a, idInformationsGroupeEntreprises);
 		
 	}

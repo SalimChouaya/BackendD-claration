@@ -24,7 +24,7 @@ public class ControllerLigneOperationFinanciere {
 	
 	@PostMapping("/DéclarationPrixDeTransfert/InformationsOperations/MontantTransactions/InformationsOperationsFinancieres/ligneOperationFinanciere")
 	public LigneOperationFinanciereBD save(@RequestBody LigneOperationFinanciereBD  a,HttpSession session) {
-		Long idInformationsOperationsFinancieres=(Long) session.getAttribute("idInformationsOperationsFinancieres");
+		Long idInformationsOperationsFinancieres=ControllerInformationsOperationsFinancieres.idInformationsOperationsFinancieres;
 		
 		
 		return ServiceLigneOperationFinanciere.save(a, idInformationsOperationsFinancieres);}

@@ -20,12 +20,12 @@ import jakarta.servlet.http.HttpSession;
 public class ControllerInformationsAutresOperations {
 	@Autowired
 	private ServiceInformationsAutresOperations InformationsAutresOperations ;
-	
+	public static Long idInformationsAutresOperations;
 	@PostMapping("/DéclarationPrixDeTransfert/MontantTransaction/InformationsAutresOperations")// lid nekhdho m return mta InformationsValeursExploitation.save(a, idDéclaration)(khatr montantTransaction o informationsOperations yetsan3o mara kahw
-	public InformationsAutresOperationsBD save(@RequestBody InformationsAutresOperationsBD a,HttpSession session) {
-		Long idMontantTransaction =(Long) session.getAttribute("idMontantTransactions");
+	public InformationsAutresOperationsBD save(@RequestBody InformationsAutresOperationsBD a) {
+		Long idMontantTransaction=ControlleurInformationsValeursExploitation.idMontantTransactions;
 		InformationsAutresOperationsBD InformationsAutresOperationsBD=InformationsAutresOperations.save(a, idMontantTransaction);
-		session.setAttribute("idInformationsAutresOperations", InformationsAutresOperationsBD.getId());
+		idInformationsAutresOperations=InformationsAutresOperationsBD.getId();
 		return InformationsAutresOperationsBD;}
 
 	

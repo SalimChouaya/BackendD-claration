@@ -20,16 +20,16 @@ import jakarta.servlet.http.HttpSession;
 @RestController
 public class ControlleurInformationsEntrepriseDeclarante {
 	
-	
+	public static Long InformationsEntrepriseDeclaranteid;
 		@Autowired
 		private com.PrixDeTransfert.Backend.services.ServiceInformationsEntrepriseDeclarante ServiceInformationsEntrepriseDeclarante;
 		@Autowired
 		com.PrixDeTransfert.Backend.repositories.InterfaceRepositoryDéclarationPrixDeTransfert InterfaceRepositoryDéclarationPrixDeTransfert;
 		@PostMapping("/DéclarationPrixDeTransfert/InformationsEntrepriseDeclarante")
-		public InformationsEntrepriseDeclaranteBD save(@RequestBody InformationsEntrepriseDeclaranteBD  a,HttpSession session) {
-			Long declarationid =(Long) session.getAttribute("Déclarationid");
+		public InformationsEntrepriseDeclaranteBD save(@RequestBody InformationsEntrepriseDeclaranteBD  a) {
+			Long declarationid =ControlleurDéclarationPrixDeTransfert.Déclarationid;
 			InformationsEntrepriseDeclaranteBD InformationsEntrepriseDeclaranteBD=ServiceInformationsEntrepriseDeclarante.save(a, declarationid);
-			session.setAttribute("InformationsEntrepriseDeclaranteid",InformationsEntrepriseDeclaranteBD.getId() );
+			InformationsEntrepriseDeclaranteid=InformationsEntrepriseDeclaranteBD.getId();
 			return InformationsEntrepriseDeclaranteBD ;
 			
 		}
@@ -38,7 +38,7 @@ public class ControlleurInformationsEntrepriseDeclarante {
 		private com.PrixDeTransfert.Backend.services.ServiceQualité ServiceQualité;
 		@PostMapping("/DéclarationPrixDeTransfert/InformationsEntrepriseDeclarante/qualité")
 		public Qualité save(@RequestBody Qualité  a,HttpSession session) {
-			Long InformationsEntrepriseDeclaranteid=(Long) session.getAttribute("InformationsEntrepriseDeclaranteid");
+			
 			
 			return ServiceQualité.save(a, InformationsEntrepriseDeclaranteid);
 			
@@ -46,8 +46,8 @@ public class ControlleurInformationsEntrepriseDeclarante {
 		com.PrixDeTransfert.Backend.repositories.InterfaceRepositoryInformationsEntrepriseDeclarante InterfaceRepositoryInformationsEntrepriseDeclarante;
 		@PutMapping("/miseAJourQualitéEntrepriseDeclarante")
 		public ResponseEntity<String> updateQualité(@RequestBody List<Qualité> updatedQualities,HttpSession session) {
-			Long idInformationsEntrepriseDeclarante =(Long) session.getAttribute("idInformationsEntrepriseDeclarante");
-			InformationsEntrepriseDeclaranteBD InformationsEntrepriseDeclarante=InterfaceRepositoryInformationsEntrepriseDeclarante.findInformationsEntrepriseDeclaranteBDById(idInformationsEntrepriseDeclarante);
+			
+			InformationsEntrepriseDeclaranteBD InformationsEntrepriseDeclarante=InterfaceRepositoryInformationsEntrepriseDeclarante.findInformationsEntrepriseDeclaranteBDById(InformationsEntrepriseDeclaranteid);
 			InformationsEntrepriseDeclarante.setQualité(updatedQualities);
 			
 			return ResponseEntity.ok(" mise à jour avec succès");
@@ -60,7 +60,7 @@ public class ControlleurInformationsEntrepriseDeclarante {
 		
 		@PostMapping("/DéclarationPrixDeTransfert/InformationsEntrepriseDeclarante/ChangementsActiviteAucoursExercice")
 		public ChangementsActiviteAucoursExerciceBD save(@RequestBody ChangementsActiviteAucoursExerciceBD  a,HttpSession session) {
-			Long InformationsEntrepriseDeclaranteid=(Long) session.getAttribute("InformationsEntrepriseDeclaranteid");
+		
 			return ServiceChangementsActiviteAucoursExercice.save(a, InformationsEntrepriseDeclaranteid);
 		
 		}
@@ -91,7 +91,7 @@ public class ControlleurInformationsEntrepriseDeclarante {
 		
 		@PostMapping("/DéclarationPrixDeTransfert/InformationsEntrepriseDeclarante/ModificationLiensCapitalAuCoursExercice")
 		public ModificationLiensCapitalAuCoursExerciceBD save(@RequestBody ModificationLiensCapitalAuCoursExerciceBD  a,HttpSession session) {
-			Long InformationsEntrepriseDeclaranteid=(Long) session.getAttribute("InformationsEntrepriseDeclaranteid");
+			
 			return ServiceModificationLiensCapitalAuCoursExercice.save(a, InformationsEntrepriseDeclaranteid);
 		
 		}

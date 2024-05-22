@@ -127,6 +127,9 @@ public class DéclarationPrixDeTransfert {
     private InformationsOperationsBD InformationsOperations;
     @OneToOne(mappedBy = "DéclarationPrixDeTransfert",cascade = CascadeType.ALL, orphanRemoval = true)
     private AutresInformationsARenseignerSurDeclarationPrixTransfert AutresInformationsARenseignerSurDeclarationPrixTransfert;
+    
+    @OneToOne(mappedBy = "DéclarationPrixDeTransfert",cascade = CascadeType.ALL, orphanRemoval = true)
+    private XMLDocument XMLDocument;
 
 	public InformationsOperationsBD getInformationsOperations() {
 		return InformationsOperations;
@@ -140,6 +143,12 @@ public class DéclarationPrixDeTransfert {
 	public void setAutresInformationsARenseignerSurDeclarationPrixTransfert(
 			AutresInformationsARenseignerSurDeclarationPrixTransfert autresInformationsARenseignerSurDeclarationPrixTransfert) {
 		AutresInformationsARenseignerSurDeclarationPrixTransfert = autresInformationsARenseignerSurDeclarationPrixTransfert;
+	}
+	public XMLDocument getXMLDocument() {
+		return XMLDocument;
+	}
+	public void setXMLDocument(XMLDocument xMLDocument) {
+		XMLDocument = xMLDocument;
 	}
 	
 

@@ -24,7 +24,7 @@ public class ControllerLigneCessionAcquisitionActif {
 	
 	@PostMapping("/DéclarationPrixDeTransfert/MontantTransaction/InformationsCessionsAcquisitionsActifs/LigneCessionAcquisitionActif")
 	public LigneCessionAcquisitionActifBD save(@RequestBody LigneCessionAcquisitionActifBD a,HttpSession session) {
-		Long idInformationsCessionsAcquisitionsActifs=(Long) session.getAttribute("idInformationsCessionsAcquisitionsActifs");
+		Long idInformationsCessionsAcquisitionsActifs=ControllerInformationsCessionsAcquisitionsActifs.idInformationsCessionsAcquisitionsActifs;
 		
 		return LigneCessionAcquisitionActif.save(a, idInformationsCessionsAcquisitionsActifs);}
 
